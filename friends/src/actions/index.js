@@ -35,3 +35,14 @@ export const createFriend = (newFriend) => {
     }
 }
 
+//DELETE
+export const deleteFriend = (id) => {
+    return (dispatch) => {
+        axios.delete(`http://localhost:5000/api/friends/${id}`)
+        .then(response => {
+            dispatch({ type: ERROR, errorMessage: 'Trouble deleting friend, please try again.'})
+        })
+    }
+}
+
+
