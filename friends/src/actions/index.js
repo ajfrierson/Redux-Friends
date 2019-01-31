@@ -7,7 +7,7 @@ export const ERROR = 'ERROR';
 //GET
 export const getFriends = () => {
     return (dispatch) => {
-      dispatch({ type: LOADING});
+      dispatch({ type: LOADING });
       
       axios
       .get('http://localhost:5000/api/friends')
@@ -15,7 +15,7 @@ export const getFriends = () => {
           dispatch({ type: GET_FRIENDS, friends: response.data })
       })
       .catch(err => {
-          dispatch({ type: ERROR, errorMessage: 'Error fetching the friends data.'})
+          dispatch({ type: ERROR, errorMessage: 'Error fetching the friends data.' })
       })
     }
 }
@@ -27,10 +27,10 @@ export const createFriend = (newFriend) => {
 
         axios.post('http://localhost:5000/api/friends', newFriend)
         .then(response => {
-            dispatch({ type: GET_FRIENDS, friends: response.data})
+            dispatch({ type: GET_FRIENDS, friends: response.data })
         })
         .catch(err => {
-            dispatch({ type: ERROR, errorMessage: 'Trouble creating new friend.'})
+            dispatch({ type: ERROR, errorMessage: 'Trouble creating new friend.' })
         })
     }
 }
@@ -40,9 +40,22 @@ export const deleteFriend = (id) => {
     return (dispatch) => {
         axios.delete(`http://localhost:5000/api/friends/${id}`)
         .then(response => {
-            dispatch({ type: ERROR, errorMessage: 'Trouble deleting friend, please try again.'})
+            dispatch({ type: ERROR, errorMessage: 'Trouble deleting friend, please try again.' })
         })
     }
 }
 
+//PUT
+export const updateFriend = (updatedFriend) => {
+    return (dispatch) => {
+        dispatch({ type: LOADING })
 
+        axios.put(`http://localhost:5000/api/friends/${updatedFriend.id}`, updatedFriend)
+        .then(response => {
+            dispatch({ type: GET_FRIENDS, friends: response.data })
+        })
+        .catch(err => {
+            dispatch({ type: ERROR, errorMessage: 'Trouble updating friend.' })
+        })
+    }
+}
